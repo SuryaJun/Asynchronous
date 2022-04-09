@@ -3,14 +3,15 @@ function ajax(callback) {
   xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
 
   xhr.onload = function () {
-    if (xhr.status === 100) {
+    if (xhr.status === 200) {
       callback(xhr.responseText);
     }
   };
 
   xhr.send();
 }
-function render(result) {
+function render(resultText) {
+  const result = JSON.parse(resultText);
   let table = "";
   result.forEach((data) => {
     table += `<tr>
@@ -27,5 +28,9 @@ function render(result) {
                   <td>${data.company.name}</td>
                 </tr>`;
   });
-  return table;
+  // return table;
+  const tbody = document.getElementById("tablebody");
+  tbody.innerHTML = table;
 }
+
+ajax(render);
